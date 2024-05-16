@@ -23,6 +23,7 @@ const crearCartaUI = (indice: number) => {
   if (!tablero.cartas[indice].encontrada) {
     cardDiv.addEventListener("click", () => {
       if (tablero.cartas[indice].estaVuelta || tablero.cartas[indice].encontrada) {
+        alert("Esta carta ya está volteada");
         return;
       }
 
@@ -44,6 +45,9 @@ const crearCartaUI = (indice: number) => {
   } else {
     // Si la carta está encontrada, mostrar la imagen
     img.setAttribute("src", tablero.cartas[indice].imagen);
+    cardDiv.addEventListener("click", () => {
+      alert("Esta pareja ya se ha encontrado.");
+    });
   }
 };
 
