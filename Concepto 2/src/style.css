@@ -1,0 +1,14 @@
+.divImagen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 150px;
+  background-color: #e6fffd;
+  border-radius: 20%;
+}
+
+.imagen {
+  max-width: 100%;
+  max-height: 100%;
+}

@@ -1,0 +1,12 @@
+#game-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+}
+
+.card {
+  width: 100px;
+  height: 100px;
+  background-color: lightblue;
+  border-radius: 10px;
+}
