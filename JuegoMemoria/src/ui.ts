@@ -19,30 +19,32 @@ const crearCartaUI = (indice: number) => {
   cardDiv.appendChild(img);
   gameBoard.appendChild(cardDiv);
 
-  cardDiv.addEventListener("click", () => {
-    // Evitar clicks en cartas volteadas o encontradas
-    if (tablero.cartas[indice].estaVuelta || tablero.cartas[indice].encontrada) {
-      alert("Esta carta ya está volteada o encontrada.");
-      return;
-    }
+  // Verificar si la carta está encontrada
+  if (!tablero.cartas[indice].encontrada) {
+    cardDiv.addEventListener("click", () => {
+      if (tablero.cartas[indice].estaVuelta || tablero.cartas[indice].encontrada) {
+        return;
+      }
 
-    voltearLaCarta(tablero, indice);
-    actualizarUI();
+      voltearLaCarta(tablero, indice);
+      actualizarUI();
 
-    // Incrementar los intentos cuando se voltean dos cartas
-    if (tablero.estadoPartida === "DosCartasLevantadas") {
-      intentos++;
-      intentosElement.textContent = intentos.toString();
-    }
-  });
+      if (tablero.estadoPartida === "DosCartasLevantadas") {
+        intentos++;
+        intentosElement.textContent = intentos.toString();
+      }
+    });
 
-  // Efecto hover
-  cardDiv.addEventListener("mouseover", () => {
-    cardDiv.classList.add("hover");
-  });
-  cardDiv.addEventListener("mouseout", () => {
-    cardDiv.classList.remove("hover");
-  });
+    cardDiv.addEventListener("mouseover", () => {
+      cardDiv.classList.add("hover");
+    });
+    cardDiv.addEventListener("mouseout", () => {
+      cardDiv.classList.remove("hover");
+    });
+  } else {
+    // Si la carta está encontrada, mostrar la imagen
+    img.setAttribute("src", tablero.cartas[indice].imagen);
+  }
 };
 
 const actualizarUI = () => {
@@ -50,12 +52,17 @@ const actualizarUI = () => {
 
   tablero.cartas.forEach((carta: Carta, indice: number) => {
     crearCartaUI(indice);
-    if (carta.estaVuelta) {
+
+    if (carta.estaVuelta && !carta.encontrada) {
       const cardDiv = gameBoard.querySelector(`[data-indice-array="${indice}"]`) as HTMLDivElement;
       const img = cardDiv.querySelector("img") as HTMLImageElement;
       img.setAttribute("src", carta.imagen);
-
       cardDiv.classList.add("flip-animation");
+    } else if (carta.encontrada) {
+      // Si la carta está encontrada, mostrar la imagen sin animación
+      const cardDiv = gameBoard.querySelector(`[data-indice-array="${indice}"]`) as HTMLDivElement;
+      const img = cardDiv.querySelector("img") as HTMLImageElement;
+      img.setAttribute("src", carta.imagen);
     }
   });
 };
