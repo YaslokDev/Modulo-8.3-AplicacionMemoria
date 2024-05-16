@@ -63,6 +63,13 @@ const actualizarUI = () => {
 startButton.addEventListener("click", () => {
   intentos = 0;
   intentosElement.textContent = "0";
+
+  // Reiniciar el estado de las cartas antes de iniciar la partida
+  tablero.cartas.forEach((carta) => {
+    carta.estaVuelta = false;
+    carta.encontrada = false;
+  });
+
   iniciaPartida(tablero);
   actualizarUI();
 });
